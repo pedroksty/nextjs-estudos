@@ -2,13 +2,10 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 
-const AddToCartModal = dynamic(
-  () => import("../../../components/AddToCartModal"),
-  {
-    loading: () => <p>Carregando...</p>,
-    ssr: false,
-  }
-);
+const AddToCartModal = dynamic(() => import("@/components/AddToCartModal"), {
+  loading: () => <p>Carregando...</p>,
+  ssr: false,
+});
 
 export default function Product() {
   const router = useRouter();
