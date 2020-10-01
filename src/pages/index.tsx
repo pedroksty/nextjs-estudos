@@ -1,9 +1,9 @@
-import Head from "next/head";
+import { Title } from "../styles/pages/Home";
 
 export default function Home() {
   return (
     <div>
-      <h1>Hello world</h1>
+      <Title>Hello world</Title>
     </div>
   );
 }
