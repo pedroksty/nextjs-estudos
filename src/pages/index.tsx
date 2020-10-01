@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import { useCallback } from "react";
 import { Title } from "../styles/pages/Home";
 
 interface IProduct {
@@ -11,6 +12,12 @@ interface HomeProps {
 }
 
 export default function Home({ recommendedProcuts }: HomeProps) {
+  const handleSumn = useCallback(async () => {
+    const { sum } = (await import("../lib/math")).default;
+
+    alert(sum(3, 9));
+  }, []);
+
   return (
     <div>
       <section>
@@ -22,6 +29,8 @@ export default function Home({ recommendedProcuts }: HomeProps) {
           ))}
         </ul>
       </section>
+
+      <button onClick={handleSumn}>sumn!</button>
     </div>
   );
 }
