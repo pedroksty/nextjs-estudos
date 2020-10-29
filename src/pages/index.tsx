@@ -13,14 +13,6 @@ interface HomeProps {
 }
 
 export default function Home({ recommendedProcuts }: HomeProps) {
-  const handleSumn = useCallback(async () => {
-    const { sum } = (await import("../lib/math")).default;
-
-    console.log(process.env.NEXT_PUBLIC_API_URL);
-
-    alert(sum(3, 9));
-  }, []);
-
   return (
     <div>
       <SEO
@@ -38,8 +30,6 @@ export default function Home({ recommendedProcuts }: HomeProps) {
           ))}
         </ul>
       </section>
-
-      <button onClick={handleSumn}>sumn!</button>
     </div>
   );
 }
