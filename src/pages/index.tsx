@@ -24,7 +24,7 @@ export default function Home({ recommendedProcuts }: HomeProps) {
       />
 
       <section>
-        <Title>Products</Title>
+        <Title>Produtos</Title>
 
         <ul>
           {recommendedProcuts.map((recommendedProduct) => (
