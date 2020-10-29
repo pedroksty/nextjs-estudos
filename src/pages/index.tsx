@@ -1,15 +1,17 @@
 import { GetServerSideProps } from "next";
+import Link from 'next/link'
 import React, { useCallback } from "react";
 import { Title } from "../styles/pages/Home";
 import SEO from "@/components/SEO";
+import { client } from "@/lib/prismic";
+import Prismic from 'prismic-javascript'
+import PrismicDOM from 'prismic-dom'
+import { Document } from 'prismic-javascript/types/documents'
 
-interface IProduct {
-  id: string;
-  title: string;
-}
+
 
 interface HomeProps {
-  recommendedProcuts: IProduct[];
+  recommendedProcuts: Document[];
 }
 
 export default function Home({ recommendedProcuts }: HomeProps) {
@@ -26,7 +28,13 @@ export default function Home({ recommendedProcuts }: HomeProps) {
 
         <ul>
           {recommendedProcuts.map((recommendedProduct) => (
-            <li key={recommendedProduct.id}>{recommendedProduct.title}</li>
+            <li key={recommendedProduct.id}>
+              <Link href={`/catalog/products/${recommendedProduct.uid}`} >
+                <a>
+                  {PrismicDOM.RichText.asText(recommendedProduct.data.title)}
+                </a>
+              </Link>
+              </li>
           ))}
         </ul>
       </section>
@@ -35,14 +43,14 @@ export default function Home({ recommendedProcuts }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/recommended`
-  );
-  const recommendedProcuts = await response.json();
+  const recommendedProducts = await client().query([
+    Prismic.Predicates.at('document.type', 'product')
+  ])
+
 
   return {
     props: {
-      recommendedProcuts,
+      recommendedProcuts: recommendedProducts.results ,
     },
   };
 };
